@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block pageContent %}
+<h1>Принять отклик?</h1>
+<h6>(Если да, то поставьте галочку напротив Status:)</h6>
+<br>
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <input type="submit" value="Save">
+</form>
+{% endblock pageContent %}

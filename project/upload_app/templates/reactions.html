@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block pageContent %}
+{% load custom_filters %}
+
+
+<h1>Отклики на ваши объявления</h1>
+
+
+    <form action="" method="get">
+    {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+   </form>
+
+<br><br><br>
+
+
+{% for r in reactions %}
+
+{% if r.author != request.user and r.post.author == request.user and r.status is False %}
+
+<br>
+
+<h2><li>Объявление: <strong>{{ r.post.title }}</strong></li></h2>
+    <h3>Имя: <strong>{{ r.author }}</strong></h3>
+    <h3>Почта: <strong>{{ r.author.email }}</strong></h3>
+    <h3>Текст: <strong>{{r.text }}</strong></h3>
+
+<a href="{% url 'reactions_accept' r.id %}"  class="btn btn-primary">Принять отклик</a>
+<a href="{% url 'reactions_delete' r.id %}" class="btn btn-primary">Удалить отклик</a>
+<hr>
+
+
+
+{% elif r.author != request.user and r.post.author == request.user and r.status is True %}
+<br>
+
+<h2><li>Объявление: <strong>{{ r.post.title }}</strong></li></h2>
+    <h3>Имя: <strong>{{ r.author }}</strong></h3>
+    <h3>Почта: <strong>{{ r.author.email }}</strong></h3>
+    <h3>Текст: <strong>{{r.text }}</strong></h3>
+
+<a href="{% url 'reactions_accept' r.id %}"  class="btn btn-primary">Отклонить отклик</a>
+<a href="{% url 'reactions_delete' r.id %}" class="btn btn-primary">Удалить отклик</a>
+<hr>
+
+
+{% endif %}
+{% endfor %}
+
+{% if not reactions %}
+<h1>Нет откликов</h1>
+{% endif %}
+
+
+{% endblock pageContent %}

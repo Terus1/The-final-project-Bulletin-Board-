@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% load custom_tags %}
+
+
+{% block pageContent %}
+<section class="text-center">
+    <h1 class="mb-5"><strong>All Posts</strong></h1>
+     <h5>({{ time_now|date:'j F Y H:i' }})</h5>
+    <form action="" method="get">
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+   </form>
+<br>
+    <div class="row">
+
+        {% for p in posts %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card shadow border">
+                <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                    <img src="{{ MEDIA_URL}}/media/default/python-django.png" class="img-fluid post-banner bg-gradient bg-dark" />
+                    <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title">{{ p.time_in|date:'d.M.Y.H.i' }}</h6>
+                    <h4 class="card-title">Автор: {{ p.author }}</h4>
+                    <br>
+                    <h3 class="card-title">Заголовок: {{ p.title }}</h3>
+
+                    <a href="{% url 'post' p.id %}" class="btn btn-primary">Подробнее</a>
+                    {% if is_authenticated and p.author != request.user %}
+                    <a href="{% url 'reaction' p.id %}" class="btn btn-primary">Отклик</a>
+                    {% endif %}
+
+                    {% if p.author == user %}
+                    <a href="{% url 'post_edit' p.id %}" class="btn btn-primary">Редактировать</a>
+                    <hr>
+                    <a href="{% url 'post_delete' p.id %}" class="btn btn-primary">Удалить</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+    </div>
+    {% if not posts %}
+    <center><h1>Пока нет объявлений</h1></center>
+    {% endif %}
+    {% if page_obj.has_previous %}
+       {# Для каждой ссылки пагинации указываем обработку через новый тег #}
+       <a href="?{% url_replace page=1 %}">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {{ page_obj.number }}
+
+   {% if page_obj.has_next %}
+       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+</section>
+</div>
+{% endblock pageContent %}
