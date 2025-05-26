@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block pageContent %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">{% trans "Вход в аккаунт" %}</h3>
+                </div>
+                <div class="card-body">
+                    <form class="login" method="post" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+
+                        <!-- Поле Email -->
+                        <div class="mb-3">
+                            <label for="id_login" class="form-label">{% trans "Email" %}</label>
+                            <input type="email" name="login" class="form-control" required id="id_login" placeholder="{% trans 'Введите ваш email' %}">
+                        </div>
+
+                        <!-- Поле Пароль -->
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label">{% trans "Пароль" %}</label>
+                            <input type="password" name="password" class="form-control" required id="id_password" placeholder="{% trans 'Введите пароль' %}">
+                        </div>
+
+                        <!-- Запомнить меня -->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" name="remember" class="form-check-input" id="id_remember">
+                            <label class="form-check-label" for="id_remember">{% trans "Запомнить меня" %}</label>
+                        </div>
+
+                        <!-- Ссылка "Забыли пароль?" -->
+                        <div class="mb-3 text-end">
+                            <a href="{% url 'account_reset_password' %}" class="text-decoration-none">{% trans "Забыли пароль?" %}</a>
+                        </div>
+
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+
+                        <!-- Кнопка входа -->
+                        <button class="btn btn-primary w-100" type="submit">
+                            {% trans "Войти" %}
+                        </button>
+                    </form>
+
+                    <!-- Разделитель -->
+                    <div class="my-4 text-center position-relative">
+                        <hr>
+                        <span class="position-absolute top-50 start-50 translate-middle bg-white px-3">{% trans "или" %}</span>
+                    </div>
+
+                    <!-- Ссылка на регистрацию -->
+                    <div class="text-center">
+                        <p>{% blocktrans %}Ещё нет аккаунта? <a href="{{ signup_url }}" class="text-decoration-none">Зарегистрируйтесь</a>.{% endblocktrans %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

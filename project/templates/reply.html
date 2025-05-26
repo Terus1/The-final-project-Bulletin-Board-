@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block pageContent %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Принять отклик?</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h5>Отклик на пост: "{{ object.post.title }}"</h5>
+                        <p><strong>Автор:</strong> {{ object.author.username }}</p>
+                        <p><strong>Текст отклика:</strong> {{ object.text }}</p>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <label class="form-label"><strong>Ваше решение:</strong></label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="choice" id="choice_accept" value="accept" autocomplete="off">
+                                <label class="btn btn-outline-success" for="choice_accept">Принять</label>
+
+                                <input type="radio" class="btn-check" name="choice" id="choice_reject" value="reject" autocomplete="off">
+                                <label class="btn btn-outline-danger" for="choice_reject">Отклонить</label>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{% url 'reactions' %}" class="btn btn-secondary">Отмена</a>
+                            <button type="submit" class="btn btn-primary">Подтвердить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

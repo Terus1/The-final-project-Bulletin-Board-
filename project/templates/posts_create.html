@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+
+{% block pageContent %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.banner.label_tag }}
+        {{ form.banner }}
+        <small class="text-muted">Рекомендуемый размер: 1200×600px</small>
+    </div>
+
+    <div class="mb-3">
+        {{ form.category.label_tag }}
+        {{ form.category }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.text.label_tag }}
+        {{ form.text }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Опубликовать</button>
+</form>
+{% endblock pageContent %}
