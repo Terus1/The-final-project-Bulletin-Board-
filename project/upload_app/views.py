@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.contrib.auth import logout
@@ -48,7 +49,7 @@ class PostsList(ListView):
         return context
 
 
-class PostCreate(CreateView):
+class PostCreate(LoginRequiredMixin, CreateView):
     form_class = PostForm
     model = Post
     template_name = 'posts_create.html'
@@ -63,7 +64,7 @@ class PostDetail(DetailView):
     context_object_name = 'post'
 
 
-class PostUpdate(UpdateView):
+class PostUpdate(LoginRequiredMixin, UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
@@ -72,13 +73,13 @@ class PostUpdate(UpdateView):
         return reverse("posts")
 
 
-class PostDelete(DeleteView):
+class PostDelete(LoginRequiredMixin ,DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('posts')
 
 
-class ReactionList(ListView):
+class ReactionList(LoginRequiredMixin ,ListView):
     model = Reply
     template_name = 'reactions.html'
     context_object_name = 'reactions'
@@ -97,7 +98,7 @@ class ReactionList(ListView):
         return reverse("posts")
 
 
-class ReactionCreate(CreateView):
+class ReactionCreate(LoginRequiredMixin, CreateView):
     # permission_required = ('upload_app.add_reaction',)
     form_class = ReplyForm
     model = Reply
@@ -114,14 +115,14 @@ class ReactionCreate(CreateView):
         return super().form_valid(form)
 
 
-class ReactionAccept(UpdateView):
+class ReactionAccept(LoginRequiredMixin, UpdateView):
     form_class = AcceptReplyForm
     model = Reply
     template_name = 'reply.html'
     success_url = reverse_lazy('reactions')
 
 
-class ReactionDelete(DeleteView):
+class ReactionDelete(LoginRequiredMixin, DeleteView):
     model = Reply
     template_name = 'reaction_delete.html'
     success_url = reverse_lazy('reactions')

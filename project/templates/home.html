@@ -6,7 +6,7 @@
 {% block pageContent %}
 <section class="text-center">
     <h1 class="mb-5"><strong>Все объявления</strong></h1>
-     <h5>({{ time_now|date:'j F Y H:i' }})</h5>
+     <h5>({{ time_now|date:'j F Y' }})</h5>
     <form action="" method="get">
         <h6>Поиск по заголовку</h6>
        {{ filterset.form.as_p }}
