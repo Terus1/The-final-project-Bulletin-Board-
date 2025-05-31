@@ -19,7 +19,6 @@ class Post(models.Model):
     CATEGORY_CHOICES = (
         ('tanks', 'Танки'),
         ('healing', 'Хилы'),
-        ('dd', 'ДД'),
         ('merchants', 'Торговцы'),
         ('guildmasters', 'Гилдмастеры'),
         ('questgivers', 'Квестгиверы'),

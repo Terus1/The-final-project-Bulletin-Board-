@@ -18,6 +18,13 @@ class ReplyForm(forms.ModelForm):
     class Meta:
         model = Reply
         fields = ['text']
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 5,
+                'placeholder': 'Напишите ваш отклик здесь...'
+            }),
+        }
 
 
 class AcceptReplyForm(forms.ModelForm):

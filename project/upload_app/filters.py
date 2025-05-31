@@ -1,4 +1,4 @@
-from django_filters import FilterSet, ModelChoiceFilter
+from django_filters import FilterSet, ModelChoiceFilter, CharFilter
 
 from .models import Reply, Post
 
@@ -26,8 +26,12 @@ class ReplyFilter(FilterSet):
 
 
 class PostFilter(FilterSet):
+    title = CharFilter(
+        field_name='title',
+        lookup_expr='icontains',
+        label='Поиск по заголовку',  # Убираем подпись
+    )
+
     class Meta:
         model = Post
-        fields = {
-            'title': ['icontains'],
-        }
+        fields = ['title']

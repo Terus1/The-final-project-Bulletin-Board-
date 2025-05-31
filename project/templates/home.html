@@ -8,7 +8,6 @@
     <h1 class="mb-5"><strong>Все объявления</strong></h1>
      <h5>({{ time_now|date:'j F Y' }})</h5>
     <form action="" method="get">
-        <h6>Поиск по заголовку</h6>
        {{ filterset.form.as_p }}
        <input type="submit" class="btn btn-primary"  value="Найти" />
 
@@ -34,7 +33,7 @@
                 <div class="card-body">
                     <h6 class="card-title">{{ p.time_in|date:'d.M.Y' }}</h6>
                     <h6 class="card-title">{{ p.time_in|date:'H:i' }}</h6>
-                    <h4 class="card-title">Автор: {{ p.author }}</h4>
+                    <h4 class="card-title">Автор: {{ p.author.first_name }}</h4>
                     <br>
                     <h3 class="card-title">Заголовок: {{ p.title }}</h3>
 

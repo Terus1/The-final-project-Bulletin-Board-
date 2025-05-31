@@ -54,6 +54,10 @@ class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'posts_create.html'
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user  # Устанавливаем автора
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse("posts")
 
